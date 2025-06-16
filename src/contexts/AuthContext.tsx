@@ -27,43 +27,6 @@ interface RegisterData {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// Mock users data
-const mockUsers: User[] = [
-    {
-        id: '1',
-        email: 'admin@hrms.com',
-        password: 'admin123',
-        role: 'admin',
-        firstName: 'John',
-        lastName: 'Admin',
-        avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
-        createdAt: new Date('2024-01-01'),
-        updatedAt: new Date('2024-01-01'),
-    },
-    {
-        id: '2',
-        email: 'employee@hrms.com',
-        password: 'emp123',
-        role: 'employee',
-        firstName: 'Jane',
-        lastName: 'Smith',
-        avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face',
-        createdAt: new Date('2024-01-02'),
-        updatedAt: new Date('2024-01-02'),
-    },
-    {
-        id: '3',
-        email: 'mike@hrms.com',
-        password: 'mike123',
-        role: 'employee',
-        firstName: 'Mike',
-        lastName: 'Johnson',
-        avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
-        createdAt: new Date('2024-01-03'),
-        updatedAt: new Date('2024-01-03'),
-    },
-];
-
 export function AuthProvider({ children }: { children: ReactNode }) {
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);

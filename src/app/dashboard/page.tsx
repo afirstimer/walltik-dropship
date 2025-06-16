@@ -11,8 +11,6 @@ import {
     DollarSign,
     TrendingUp,
     Clock,
-    CheckCircle,
-    XCircle,
     AlertCircle,
 } from 'lucide-react';
 

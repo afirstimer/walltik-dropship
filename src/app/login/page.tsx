@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Building2, Codesandbox, Eye, EyeOff, Loader2 } from 'lucide-react';
+import { Codesandbox, Eye, EyeOff, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { loginUser } from '@/services/authService';
 
@@ -18,8 +18,6 @@ export default function LoginPage() {
     const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-
-    const { login } = useAuth();
     const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -34,7 +32,7 @@ export default function LoginPage() {
             } else {
                 setError('Invalid email or password');
             }
-        } catch (err) {
+        } catch {
             setError('Invalid email or password');
         } finally {
             setIsLoading(false);
@@ -151,7 +149,7 @@ export default function LoginPage() {
                         </div> */}
 
                         <div className="mt-6 text-center text-sm text-gray-600">
-                            Don't have an account?{' '}
+                            Dont have an account?{' '}
                             <Link href="/register" className="text-blue-600 hover:underline">
                                 Sign up
                             </Link>

@@ -25,7 +25,6 @@ import {
 } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Textarea } from '@/components/ui/textarea';
 import { Plus, Search, Edit, Trash2, Eye, Mail, Phone } from 'lucide-react';
 import { toast } from 'sonner';
 import { Employee } from '@/types';
@@ -124,7 +123,7 @@ export default function EmployeesPage() {
                     <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
                         <DialogHeader>
                             <DialogTitle>Add New Employee</DialogTitle>
-                            <DialogDescription>Enter the employee's information below.</DialogDescription>
+                            <DialogDescription>Enter the employee information below.</DialogDescription>
                         </DialogHeader>
                         <form onSubmit={(e) => {
                             e.preventDefault();

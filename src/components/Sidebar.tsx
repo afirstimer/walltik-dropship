@@ -12,7 +12,6 @@ import {
     FileText,
     Settings,
     Building2,
-    UserCheck,
     Clock,
     BarChart3,
     User,

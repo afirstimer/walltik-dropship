@@ -6,11 +6,8 @@ import {
     type Department,
     type LeaveRequest,
     type PayrollRecord,
-    AttendanceRecord,
-    PerformanceReview,
     type AdminDashboardStats,
     type EmployeeDashboardStats,
-    LeaveType,
     type LeaveStatus,
 } from '@/types';
 
@@ -348,7 +345,6 @@ export function HRMSProvider({ children }: { children: ReactNode }) {
 
     const getEmployeeDashboardStats = (employeeId: string): EmployeeDashboardStats => {
         const employeeLeaves = leaveRequests.filter(req => req.employeeId === employeeId);
-        const currentYear = new Date().getFullYear();
 
         return {
             leaveBalance: {

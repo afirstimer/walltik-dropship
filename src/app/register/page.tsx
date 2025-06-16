@@ -8,11 +8,9 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Building2, Codesandbox, Eye, EyeOff, Loader2 } from 'lucide-react';
+import { Codesandbox, Eye, EyeOff, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import type { UserRole } from '@/types';
-import { registerUser } from '@/services/authService';
 
 export default function RegisterPage() {
     const [formData, setFormData] = useState({
@@ -34,10 +32,6 @@ export default function RegisterPage() {
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
-    };
-
-    const handleRoleChange = (value: UserRole) => {
-        setFormData(prev => ({ ...prev, role: value }));
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -71,7 +65,7 @@ export default function RegisterPage() {
             } else {
                 setError('Registration failed. Email may already be in use.');
             }
-        } catch (err) {
+        } catch {
             setError('An error occurred during registration');
         } finally {
             setIsLoading(false);
