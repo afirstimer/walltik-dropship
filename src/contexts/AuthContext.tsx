@@ -2,6 +2,9 @@
 
 import React, { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
 import type { User, UserRole } from '@/types';
+import { auth, db } from '../firebase';
+import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword } from 'firebase/auth';
 
 interface AuthContextType {
     user: User | null;
@@ -78,11 +81,25 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setLoading(true);
 
         // Simulate API call delay
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+        if (!user || !user.emailVerified) {
+            setLoading(false);
+            return false;
+        }
 
-        const foundUser = mockUsers.find(u => u.email === email && u.password === password);
-
-        if (foundUser) {
+        if (user) {
+            const foundUser: User = {
+                id: user.uid,
+                email: user.email || '',
+                password: password,
+                role: 'employee',
+                firstName: '',
+                lastName: '',
+                avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
+                createdAt: new Date(),
+                updatedAt: new Date(),
+            }
             setUser(foundUser);
             localStorage.setItem('hrms_user', JSON.stringify(foundUser));
             setLoading(false);
@@ -99,15 +116,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         // Simulate API call delay
         await new Promise(resolve => setTimeout(resolve, 1000));
 
-        // Check if user already exists
-        const existingUser = mockUsers.find(u => u.email === userData.email);
-        if (existingUser) {
+        const userCredential = await createUserWithEmailAndPassword(auth, userData.email, userData.password);
+
+        if (!userCredential) {
             setLoading(false);
             return false;
         }
 
+        const user = userCredential.user;
+
+        const userDocRef = doc(db, 'account', user.uid);
+        await setDoc(userDocRef, {
+            email: userData.email,
+            firstName: '',
+            lastName: '',
+            dateCreated: serverTimestamp(),
+            dateUpdated: serverTimestamp(),
+        });
+
+        await sendEmailVerification(user);
+
         const newUser: User = {
-            id: Date.now().toString(),
+            id: user.uid,
             ...userData,
             avatar: userData.role === 'admin'
                 ? 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face'
@@ -116,7 +146,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             updatedAt: new Date(),
         };
 
-        mockUsers.push(newUser);
         setUser(newUser);
         localStorage.setItem('hrms_user', JSON.stringify(newUser));
         setLoading(false);

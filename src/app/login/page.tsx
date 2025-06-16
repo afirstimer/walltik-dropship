@@ -8,8 +8,9 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Building2, Eye, EyeOff, Loader2 } from 'lucide-react';
+import { Building2, Codesandbox, Eye, EyeOff, Loader2 } from 'lucide-react';
 import Link from 'next/link';
+import { loginUser } from '@/services/authService';
 
 export default function LoginPage() {
     const [email, setEmail] = useState('');
@@ -27,26 +28,16 @@ export default function LoginPage() {
         setIsLoading(true);
 
         try {
-            const success = await login(email, password);
+            const success = await loginUser(email, password);
             if (success) {
                 router.push('/dashboard');
             } else {
                 setError('Invalid email or password');
             }
         } catch (err) {
-            setError('An error occurred during login');
+            setError('Invalid email or password');
         } finally {
             setIsLoading(false);
-        }
-    };
-
-    const fillDemoCredentials = (role: 'admin' | 'employee') => {
-        if (role === 'admin') {
-            setEmail('admin@hrms.com');
-            setPassword('admin123');
-        } else {
-            setEmail('employee@hrms.com');
-            setPassword('emp123');
         }
     };
 
@@ -55,10 +46,10 @@ export default function LoginPage() {
             <div className="w-full max-w-md">
                 <div className="text-center mb-8">
                     <div className="mx-auto w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mb-4">
-                        <Building2 className="h-8 w-8 text-white" />
+                        <Codesandbox className="h-8 w-8 text-white" />
                     </div>
-                    <h1 className="text-3xl font-bold text-gray-900">HRMS Portal</h1>
-                    <p className="text-gray-600 mt-2">Human Resource Management System</p>
+                    <h1 className="text-3xl font-bold text-gray-900">Walltik Portal</h1>
+                    <p className="text-gray-600 mt-2">CRM Management System</p>
                 </div>
 
                 <Card>
@@ -127,7 +118,7 @@ export default function LoginPage() {
                             </Button>
                         </form>
 
-                        <div className="mt-6">
+                        {/* <div className="mt-6">
                             <div className="relative">
                                 <div className="absolute inset-0 flex items-center">
                                     <span className="w-full border-t" />
@@ -157,7 +148,7 @@ export default function LoginPage() {
                                     Employee Demo
                                 </Button>
                             </div>
-                        </div>
+                        </div> */}
 
                         <div className="mt-6 text-center text-sm text-gray-600">
                             Don't have an account?{' '}
@@ -168,11 +159,11 @@ export default function LoginPage() {
                     </CardContent>
                 </Card>
 
-                <div className="mt-8 text-center text-xs text-gray-500">
+                {/* <div className="mt-8 text-center text-xs text-gray-500">
                     <p>Demo Credentials:</p>
                     <p>Admin: admin@hrms.com / admin123</p>
                     <p>Employee: employee@hrms.com / emp123</p>
-                </div>
+                </div> */}
             </div>
         </div>
     );

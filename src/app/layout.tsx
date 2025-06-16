@@ -17,8 +17,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "HRMS - Human Resource Management System",
-  description: "Modern HR management platform for employees and administrators",
+  title: "Walltik",
+  description: "Walltik - CRM Management System",
 };
 
 export default function RootLayout({

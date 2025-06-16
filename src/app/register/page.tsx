@@ -9,18 +9,19 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Building2, Eye, EyeOff, Loader2 } from 'lucide-react';
+import { Building2, Codesandbox, Eye, EyeOff, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import type { UserRole } from '@/types';
+import { registerUser } from '@/services/authService';
 
 export default function RegisterPage() {
     const [formData, setFormData] = useState({
         email: '',
         password: '',
         confirmPassword: '',
-        firstName: '',
-        lastName: '',
-        role: '' as UserRole | '',
+        // firstName: '',
+        // lastName: '',
+        // role: '' as UserRole | '',
     });
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -54,24 +55,19 @@ export default function RegisterPage() {
             return;
         }
 
-        if (!formData.role) {
-            setError('Please select a role');
-            return;
-        }
-
         setIsLoading(true);
 
         try {
             const success = await register({
                 email: formData.email,
                 password: formData.password,
-                firstName: formData.firstName,
-                lastName: formData.lastName,
-                role: formData.role,
-            });
+                firstName: '',
+                lastName: '',
+                role: 'employee'
+            })
 
             if (success) {
-                router.push('/dashboard');
+                router.push('/login');
             } else {
                 setError('Registration failed. Email may already be in use.');
             }
@@ -87,9 +83,9 @@ export default function RegisterPage() {
             <div className="w-full max-w-md">
                 <div className="text-center mb-8">
                     <div className="mx-auto w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mb-4">
-                        <Building2 className="h-8 w-8 text-white" />
+                        <Codesandbox className="h-8 w-8 text-white" />
                     </div>
-                    <h1 className="text-3xl font-bold text-gray-900">Join HRMS</h1>
+                    <h1 className="text-3xl font-bold text-gray-900">Join Walltik</h1>
                     <p className="text-gray-600 mt-2">Create your account to get started</p>
                 </div>
 
@@ -102,7 +98,7 @@ export default function RegisterPage() {
                     </CardHeader>
                     <CardContent>
                         <form onSubmit={handleSubmit} className="space-y-4">
-                            <div className="grid grid-cols-2 gap-4">
+                            {/* <div className="grid grid-cols-2 gap-4">
                                 <div className="space-y-2">
                                     <Label htmlFor="firstName">First Name</Label>
                                     <Input
@@ -127,7 +123,7 @@ export default function RegisterPage() {
                                         required
                                     />
                                 </div>
-                            </div>
+                            </div> */}
 
                             <div className="space-y-2">
                                 <Label htmlFor="email">Email</Label>
@@ -142,7 +138,7 @@ export default function RegisterPage() {
                                 />
                             </div>
 
-                            <div className="space-y-2">
+                            {/* <div className="space-y-2">
                                 <Label htmlFor="role">Role</Label>
                                 <Select onValueChange={handleRoleChange} required>
                                     <SelectTrigger>
@@ -153,7 +149,7 @@ export default function RegisterPage() {
                                         <SelectItem value="employee">Employee</SelectItem>
                                     </SelectContent>
                                 </Select>
-                            </div>
+                            </div> */}
 
                             <div className="space-y-2">
                                 <Label htmlFor="password">Password</Label>
