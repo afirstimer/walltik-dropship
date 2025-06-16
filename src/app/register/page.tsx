@@ -10,7 +10,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Codesandbox, Eye, EyeOff, Loader2 } from 'lucide-react';
 import Link from 'next/link';
-import type { UserRole } from '@/types';
 
 export default function RegisterPage() {
     const [formData, setFormData] = useState({
