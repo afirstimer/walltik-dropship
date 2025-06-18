@@ -13,10 +13,19 @@ import {
     Clock,
     AlertCircle,
 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 export default function DashboardPage() {
-    const { user, isAdmin, isEmployee } = useAuth();
+    const { user, isAdmin, isEmployee, loading } = useAuth();
     const { getAdminDashboardStats, getEmployeeDashboardStats, employees, leaveRequests } = useHRMS();
+    const router = useRouter();
+
+    useEffect(() => {
+        if (!loading && user === null) {
+            router.push('/login');
+        }
+    }, [loading, user]);
 
     if (isAdmin) {
         const stats = getAdminDashboardStats();

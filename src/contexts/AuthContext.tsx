@@ -3,7 +3,7 @@
 import React, { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
 import type { User, UserRole } from '@/types';
 import { auth, db } from '../firebase';
-import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { doc, setDoc, serverTimestamp, getDoc } from 'firebase/firestore';
 import { createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword } from 'firebase/auth';
 
 interface AuthContextType {
@@ -51,6 +51,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             return false;
         }
 
+        const userDocRef = doc(db, 'account', user.uid);
+        const userSnapshop = await getDoc(userDocRef);
+        const userData = userSnapshop.data();
+
         if (user) {
             const foundUser: User = {
                 id: user.uid,
@@ -60,8 +64,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 firstName: '',
                 lastName: '',
                 avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
-                createdAt: new Date(),
-                updatedAt: new Date(),
+                createdAt: userData ? new Date(userData.createdAt) : new Date(),
+                updatedAt: userData ? new Date(userData.dateUpdated) : new Date(),
             }
             setUser(foundUser);
             localStorage.setItem('hrms_user', JSON.stringify(foundUser));

@@ -5,6 +5,7 @@ import ClientBody from "./ClientBody";
 import { AuthProvider } from '@/contexts/AuthContext';
 import { HRMSProvider } from '@/contexts/HRMSContext';
 import { Toaster } from '@/components/ui/sonner';
+import ClientOnly from "./ClientOnly";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,12 +32,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <AuthProvider>
-          <HRMSProvider>
-            <ClientBody>{children}</ClientBody>
-            <Toaster />
-          </HRMSProvider>
-        </AuthProvider>
+        <ClientOnly>
+          <AuthProvider>
+            <HRMSProvider>
+              <ClientBody>{children}</ClientBody>
+              <Toaster />
+            </HRMSProvider>
+          </AuthProvider>
+        </ClientOnly>
       </body>
     </html>
   );
